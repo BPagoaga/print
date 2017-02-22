@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+
+		<style type="text/css">
+			.col-xs-6 {
+				width: 50%;
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+
+		<form action="print.html" method="post" id="form" onsubmit="event.preventDefault(); submitForm(this);">
+			<input type="text" name="marque">
+			<input type="text" name="ref">
+			<input type="number" name="euros">
+			<input type="number" name="cents">
+
+			<input type="submit" value="Nouvelle référence">
+		</form>
+
+		<div id="app" class="row">
+			
+		</div>
+
+		<script type="text/javascript">
+			let app = document.getElementById(('app')),
+				count = 0;
+
+			const exemple = [
+				{ marque: "Marque1", reference: "ref1", euros: "euros1", cents: "cents1"},
+				{ marque: "Marque2", reference: "ref2", euros: "euros2", cents: "cents2"},
+				{ marque: "Marque3", reference: "ref3", euros: "euros3", cents: "cents3"}
+			];
+
+			/**
+			 * [createTable description]
+			 * @param  {array} arr un tableau d'objets, chaque objet correspondant à une cellule
+			 * @return {string}     [description]
+			 */
+			const createTable = function(arr) {
+				let str = '';
+				arr.map(function(el){
+					str += createCell(el);
+				})
+
+				return str;
+			}
+
+			/**
+			 * [createCell description]
+			 * @param  {object} obj, properties : marque, ref, euros, cents
+			 * @return {string}     [DOM element]
+			 */
+			const createCell = function(obj) {
+				return '<div class="col-xs-6">'+obj.marque+'</div>';
+			}
+
+			const Cell = function(marque, ref, euros, cents) {
+				this.marque = marque;
+				this.ref = ref;
+				this.euros = euros;
+				this.cents = cents;
+			}
+
+			const render = function(el, n) {
+				for()
+			}
+
+			// enregistrement des données en local lors de la soumission du formulaire
+			function submitForm(form) {
+				let cell = new Cell(form.marque.value, form.ref.value ,form.euros.value, form.cents.value);				
+
+				localStorage.setItem(count, cell);
+
+				render(localStorage, count);
+
+				form.reset();
+				count ++;
+			};
+
+			// affichage des données dans un tableau
+			// en passant par le localstorage, ces données persistent jusqu'à ce qu'on vide le cache
+			const displayDatas = function() {
+				let i =0;
+				let arr = [];
+				let condition = true;
+				while(condition) {
+					arr.push(localstorage.getItem(i));
+					i++;
+					if (arr[i] == 'undefined') { 
+						conditon = false; 
+					}
+				}
+
+				return arr;
+			}
+			
+
+		</script>
+
+	</body>
+</html>
