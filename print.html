@@ -26,8 +26,16 @@
 			
 		</div>
 
+		<button id="clear">Clear</button>
+
+		<script type="text/template" id="template">
+			<div class="col-xs-6">${obj.marque}</div>
+		</script>
+
 		<script type="text/javascript">
 			let app = document.getElementById(('app')),
+				template = document.getElementById(('template')),
+				clear = document.getElementById('clear'),
 				count = 0;
 
 			const exemple = [
@@ -36,19 +44,10 @@
 				{ marque: "Marque3", reference: "ref3", euros: "euros3", cents: "cents3"}
 			];
 
-			/**
-			 * [createTable description]
-			 * @param  {array} arr un tableau d'objets, chaque objet correspondant à une cellule
-			 * @return {string}     [description]
-			 */
-			const createTable = function(arr) {
-				let str = '';
-				arr.map(function(el){
-					str += createCell(el);
-				})
-
-				return str;
-			}
+			clear.onclick = function() {
+				localStorage.clear();
+				render(localStorage)
+			};
 
 			/**
 			 * [createCell description]
@@ -56,7 +55,8 @@
 			 * @return {string}     [DOM element]
 			 */
 			const createCell = function(obj) {
-				return '<div class="col-xs-6">'+obj.marque+'</div>';
+				let cell = template.innerText;
+				return cell;
 			}
 
 			const Cell = function(marque, ref, euros, cents) {
@@ -67,16 +67,22 @@
 			}
 
 			const render = function(el, n) {
-				for()
+				let str = '';
+				
+				Object.keys(localStorage).map(function(key){
+					str += createCell(JSON.parse(localStorage.getItem(key)))
+				})
+
+				app.innerHTML = str;
+				
 			}
 
 			// enregistrement des données en local lors de la soumission du formulaire
 			function submitForm(form) {
 				let cell = new Cell(form.marque.value, form.ref.value ,form.euros.value, form.cents.value);				
 
-				localStorage.setItem(count, cell);
-
-				render(localStorage, count);
+				localStorage.setItem(count, JSON.stringify(cell));
+				render(localStorage);
 
 				form.reset();
 				count ++;
