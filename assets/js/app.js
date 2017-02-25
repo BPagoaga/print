@@ -1,5 +1,6 @@
 let app = document.getElementById(('app')),
 	clear = document.getElementById('clear'),
+	clearLast = document.getElementById('clearlast'),
 	count = 0
 
 /**
@@ -8,7 +9,14 @@ let app = document.getElementById(('app')),
 clear.onclick = function() {
 	localStorage.clear()
 	app.innerHTML = ''
+	count = 0
 };
+
+clearLast.onclick = function() {
+	localStorage.removeItem(count)
+	app.removeChild(app.lastChild)
+	count --
+}
 
 /**
  * Créé une cellule
